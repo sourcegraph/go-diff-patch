@@ -1,0 +1,142 @@
+diff --git a/rollup.config.ts b/rollup.config.ts
+index e247121..1df8fb8 100644
+--- a/rollup.config.ts
++++ b/rollup.config.ts
+-import babel from '@rollup/plugin-babel';
+-import { nodeResolve } from '@rollup/plugin-node-resolve';
+-import { terser } from 'rollup-plugin-terser';
+-
++import babel from '@rollup/plugin-babel'
++import { nodeResolve } from '@rollup/plugin-node-resolve'
++import { terser } from 'rollup-plugin-terser'
+-import pkg from './package.json';
+-
++
++import pkg from './package.json'
++const extensions = ['.ts']
+-const extensions = ['.ts'];
+-
++
+-
+-export default {
++
+-  input: 'src/index.ts',
+-  plugins: [
++
+-  plugins: [
+-    nodeResolve({ extensions }),
++
+-    nodeResolve({ extensions }),
+-    babel({
++
+-    babel({
+-      extensions,
++
+-      extensions,
+-      babelHelpers: 'bundled',
++
+-      babelHelpers: 'bundled',
+-      exclude: 'node_modules/**'
++
+-      exclude: 'node_modules/**'
+-    }),
++
+-    }),
+-    terser()
++
+-    terser()
+-  ],
++
+-  ],
+-  output: [
++
+-  output: [
+-    {
++
+-    {
+-      file: pkg.main,
++
+-      file: pkg.main,
+-      format: 'cjs',
++
+-      format: 'cjs',
+-      exports: 'auto',
++
+-      exports: 'auto',
+-      sourcemap: true
++
+-      sourcemap: true
+-    },
++
+-    },
+-    {
++
+-    {
+-      file: pkg.module,
++
+-      file: pkg.module,
+-      format: 'es',
++
+-      format: 'es',
+-      sourcemap: true
++
+-      sourcemap: true
+-    },
++
+-    },
+-    {
++
+-    {
+-      name: pkg.name,
++
+-      name: pkg.name,
+-      file: pkg.umd,
++
+-      file: pkg.umd,
+-      format: 'umd',
++
+-      format: 'umd',
+-      sourcemap: true
++
+-      sourcemap: true
+-    }
++
+-    }
+-  ]
++
+-  ]
+-};
++
+-};
+-
++
++    input: 'src/index.ts',
++    plugins: [
++        nodeResolve({ extensions }),
++        babel({
++            extensions,
++            babelHelpers: 'bundled',
++            exclude: 'node_modules/**',
++        }),
++        terser(),
++    ],
++    output: [
++        {
++            file: pkg.main,
++            format: 'cjs',
++            exports: 'auto',
++            sourcemap: true,
++        },
++        {
++            file: pkg.module,
++            format: 'es',
++            sourcemap: true,
++        },
++        {
++            name: pkg.name,
++            file: pkg.umd,
++            format: 'umd',
++            sourcemap: true,
++        },
++    ],
++}
