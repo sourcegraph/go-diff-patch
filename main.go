@@ -11,7 +11,7 @@ import (
 
 func main() {
 	uri := span.URI("rollup.config.ts")
-	f, err := os.Create("test.patch")
+	f, err := os.Create("generated.patch")
 	if err != nil {
 		panic(err)
 	}
