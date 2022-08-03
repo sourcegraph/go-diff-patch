@@ -3,9 +3,9 @@ package godiffpatch
 import (
 	"fmt"
 
-	"github.com/BolajiOlajide/go-tools/diff"
-	"github.com/BolajiOlajide/go-tools/diff/myers"
-	"github.com/BolajiOlajide/go-tools/span"
+	"github.com/BolajiOlajide/go-tools/internal/diff"
+	"github.com/BolajiOlajide/go-tools/internal/diff/myers"
+	"github.com/BolajiOlajide/go-tools/internal/span"
 )
 
 // TODO: add description

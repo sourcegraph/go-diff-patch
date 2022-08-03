@@ -8,8 +8,8 @@ import (
 	"strings"
 	"unicode/utf8"
 
-	"github.com/BolajiOlajide/go-tools/diff/lcs"
-	"github.com/BolajiOlajide/go-tools/span"
+	"github.com/BolajiOlajide/go-tools/internal/diff/lcs"
+	"github.com/BolajiOlajide/go-tools/internal/span"
 )
 
 // maxDiffs is a limit on how deeply the lcs algorithm should search
