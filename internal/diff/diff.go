@@ -9,7 +9,7 @@ import (
 	"sort"
 	"strings"
 
-	"github.com/BolajiOlajide/go-tools/internal/span"
+	"github.com/BolajiOlajide/go-diff-patch/internal/span"
 )
 
 // TextEdit represents a change to a section of a document.
