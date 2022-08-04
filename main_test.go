@@ -2,4 +2,6 @@ package godiffpatch
 
 import "testing"
 
-func TestGeneratePatch(t *testing.T) {}
+func TestGeneratePatch(t *testing.T) {
+
+}
