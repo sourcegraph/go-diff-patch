@@ -1,0 +1,9 @@
+--- a/test.json
++++ b/test.json
+@@ -4,4 +1,4 @@
+ {
+-	"name": "test",
++	"name": "test-name",
+ 	"value": "test-value"
+ }
+\ No newline at end of file
