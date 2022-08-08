@@ -182,8 +182,13 @@ func (u Unified) Format(f fmt.State, r rune) {
 			}
 		}
 		fmt.Fprint(f, "@@")
-		fmt.Fprintf(f, " -%d,%d", fromCount, fromCount)
-		fmt.Fprintf(f, " +%d,%d", hunk.ToLine, toCount)
+		if fromCount == 0 {
+			fmt.Fprintf(f, " -0,0 +%d,%d", hunk.ToLine, toCount)
+		} else if toCount == 0 {
+			fmt.Fprintf(f, " -%d,%d +0,0", hunk.FromLine, fromCount)
+		} else {
+			fmt.Fprintf(f, " -%d,%d +%d,%d", hunk.FromLine, fromCount, hunk.ToLine, toCount)
+		}
 		fmt.Fprint(f, " @@\n")
 		for _, l := range hunk.Lines {
 			switch l.Kind {
