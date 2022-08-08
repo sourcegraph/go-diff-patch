@@ -7,8 +7,6 @@ package span
 import (
 	"fmt"
 	"go/token"
-
-	"github.com/BolajiOlajide/go-diff-patch/internal/lsp/bug"
 )
 
 // Range represents a source code range in token.Pos form.
@@ -81,7 +79,7 @@ func FileSpan(posFile, srcFile *token.File, start, end token.Pos) (Span, error) 
 		return Span{}, fmt.Errorf("start pos is not valid")
 	}
 	if posFile == nil {
-		return Span{}, bug.Errorf("missing file association") // should never get here with a nil file
+		return Span{}, fmt.Errorf("missing file association") // should never get here with a nil file
 	}
 	var s Span
 	var err error
@@ -111,7 +109,7 @@ func FileSpan(posFile, srcFile *token.File, start, end token.Pos) (Span, error) 
 		tf = srcFile
 	}
 	if startFilename != tf.Name() {
-		return Span{}, bug.Errorf("must supply Converter for file %q", startFilename)
+		return Span{}, fmt.Errorf("must supply Converter for file %q", startFilename)
 	}
 	return s.WithOffset(tf)
 }
@@ -157,10 +155,10 @@ func (s Span) Range(tf *token.File) (Range, error) {
 	// go/token will panic if the offset is larger than the file's size,
 	// so check here to avoid panicking.
 	if s.Start().Offset() > tf.Size() {
-		return Range{}, bug.Errorf("start offset %v is past the end of the file %v", s.Start(), tf.Size())
+		return Range{}, fmt.Errorf("start offset %v is past the end of the file %v", s.Start(), tf.Size())
 	}
 	if s.End().Offset() > tf.Size() {
-		return Range{}, bug.Errorf("end offset %v is past the end of the file %v", s.End(), tf.Size())
+		return Range{}, fmt.Errorf("end offset %v is past the end of the file %v", s.End(), tf.Size())
 	}
 	return Range{
 		Start:   tf.Pos(s.Start().Offset()),
@@ -195,9 +193,9 @@ func ToOffset(tf *token.File, line, col int) (int, error) {
 	}
 	pos := tf.LineStart(line)
 	if !pos.IsValid() {
-		// bug.Errorf here because LineStart panics on out-of-bound input, and so
+		// fmt.Errorf here because LineStart panics on out-of-bound input, and so
 		// should never return invalid positions.
-		return -1, bug.Errorf("line is not in file")
+		return -1, fmt.Errorf("line is not in file")
 	}
 	// we assume that column is in bytes here, and that the first byte of a
 	// line is at column 1
