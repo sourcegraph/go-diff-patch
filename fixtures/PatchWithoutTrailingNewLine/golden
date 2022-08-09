@@ -1,5 +1,5 @@
---- a/test.json
-+++ b/test.json
+--- a/original
++++ b/original
 @@ -4,4 +1,4 @@
  {
 -	"name": "test",
