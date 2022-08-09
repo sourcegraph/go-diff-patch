@@ -33,48 +33,6 @@ func SortTextEdits(d []TextEdit) {
 	})
 }
 
-// ApplyEdits applies the set of edits to the before and returns the resulting
-// content.
-// It may panic or produce garbage if the edits are not valid for the provided
-// before content.
-func ApplyEdits(before string, edits []TextEdit) string {
-	// Preconditions:
-	//   - all of the edits apply to before
-	//   - and all the spans for each TextEdit have the same URI
-	if len(edits) == 0 {
-		return before
-	}
-	edits, _ = prepareEdits(before, edits)
-	after := strings.Builder{}
-	last := 0
-	for _, edit := range edits {
-		start := edit.Span.Start().Offset()
-		if start > last {
-			after.WriteString(before[last:start])
-			last = start
-		}
-		after.WriteString(edit.NewText)
-		last = edit.Span.End().Offset()
-	}
-	if last < len(before) {
-		after.WriteString(before[last:])
-	}
-	return after.String()
-}
-
-// LineEdits takes a set of edits and expands and merges them as necessary
-// to ensure that there are only full line edits left when it is done.
-func LineEdits(before string, edits []TextEdit) []TextEdit {
-	if len(edits) == 0 {
-		return nil
-	}
-	edits, partial := prepareEdits(before, edits)
-	if partial {
-		edits = lineEdits(before, edits)
-	}
-	return edits
-}
-
 // prepareEdits returns a sorted copy of the edits
 func prepareEdits(before string, edits []TextEdit) ([]TextEdit, bool) {
 	partial := false
