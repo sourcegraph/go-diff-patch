@@ -1,6 +1,6 @@
 --- a/original
 +++ b/original
-@@ -4,4 +1,4 @@
+@@ -1,4 +1,4 @@
  {
 -	"name": "test",
 +	"name": "test-name",
