@@ -8,8 +8,8 @@ package myers
 import (
 	"strings"
 
-	"github.com/BolajiOlajide/go-diff-patch/internal/diff"
-	"github.com/BolajiOlajide/go-diff-patch/internal/span"
+	"github.com/sourcegraph/go-diff-patch/internal/diff"
+	"github.com/sourcegraph/go-diff-patch/internal/span"
 )
 
 // Sources:

@@ -1,4 +1,4 @@
-module github.com/BolajiOlajide/go-diff-patch
+module github.com/sourcegraph/go-diff-patch
 
 go 1.18
 
