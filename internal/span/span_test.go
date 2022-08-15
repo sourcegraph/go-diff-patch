@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
-package span_test
+package span
 
 import (
 	"fmt"
@@ -10,8 +10,6 @@ import (
 	"path/filepath"
 	"strings"
 	"testing"
-
-	"github.com/BolajiOlajide/go-diff-patch/internal/span"
 )
 
 var (
@@ -31,7 +29,7 @@ func TestFormat(t *testing.T) {
 	converter := lines(10)
 	for _, test := range tests {
 		for ti, text := range test[:2] {
-			spn := span.Parse(text)
+			spn := Parse(text)
 			if ti <= 1 {
 				// we can check %v produces the same as the input
 				expect := toPath(test[ti])

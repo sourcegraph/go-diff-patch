@@ -5,13 +5,9 @@
 //go:build !windows
 // +build !windows
 
-package span_test
+package span
 
-import (
-	"testing"
-
-	"github.com/BolajiOlajide/go-diff-patch/internal/span"
-)
+import "testing"
 
 // TestURI tests the conversion between URIs and filenames. The test cases
 // include Windows-style URIs and filepaths, but we avoid having OS-specific
@@ -20,45 +16,45 @@ import (
 func TestURIFromPath(t *testing.T) {
 	for _, test := range []struct {
 		path, wantFile string
-		wantURI        span.URI
+		wantURI        URI
 	}{
 		{
 			path:     ``,
 			wantFile: ``,
-			wantURI:  span.URI(""),
+			wantURI:  URI(""),
 		},
 		{
 			path:     `C:/Windows/System32`,
 			wantFile: `C:/Windows/System32`,
-			wantURI:  span.URI("file:///C:/Windows/System32"),
+			wantURI:  URI("file:///C:/Windows/System32"),
 		},
 		{
 			path:     `C:/Go/src/bob.go`,
 			wantFile: `C:/Go/src/bob.go`,
-			wantURI:  span.URI("file:///C:/Go/src/bob.go"),
+			wantURI:  URI("file:///C:/Go/src/bob.go"),
 		},
 		{
 			path:     `c:/Go/src/bob.go`,
 			wantFile: `C:/Go/src/bob.go`,
-			wantURI:  span.URI("file:///C:/Go/src/bob.go"),
+			wantURI:  URI("file:///C:/Go/src/bob.go"),
 		},
 		{
 			path:     `/path/to/dir`,
 			wantFile: `/path/to/dir`,
-			wantURI:  span.URI("file:///path/to/dir"),
+			wantURI:  URI("file:///path/to/dir"),
 		},
 		{
 			path:     `/a/b/c/src/bob.go`,
 			wantFile: `/a/b/c/src/bob.go`,
-			wantURI:  span.URI("file:///a/b/c/src/bob.go"),
+			wantURI:  URI("file:///a/b/c/src/bob.go"),
 		},
 		{
 			path:     `c:/Go/src/bob george/george/george.go`,
 			wantFile: `C:/Go/src/bob george/george/george.go`,
-			wantURI:  span.URI("file:///C:/Go/src/bob%20george/george/george.go"),
+			wantURI:  URI("file:///C:/Go/src/bob%20george/george/george.go"),
 		},
 	} {
-		got := span.URIFromPath(test.path)
+		got := URIFromPath(test.path)
 		if got != test.wantURI {
 			t.Errorf("URIFromPath(%q): got %q, expected %q", test.path, got, test.wantURI)
 		}
@@ -72,40 +68,40 @@ func TestURIFromPath(t *testing.T) {
 func TestURIFromURI(t *testing.T) {
 	for _, test := range []struct {
 		inputURI, wantFile string
-		wantURI            span.URI
+		wantURI            URI
 	}{
 		{
 			inputURI: `file:///c:/Go/src/bob%20george/george/george.go`,
 			wantFile: `C:/Go/src/bob george/george/george.go`,
-			wantURI:  span.URI("file:///C:/Go/src/bob%20george/george/george.go"),
+			wantURI:  URI("file:///C:/Go/src/bob%20george/george/george.go"),
 		},
 		{
 			inputURI: `file:///C%3A/Go/src/bob%20george/george/george.go`,
 			wantFile: `C:/Go/src/bob george/george/george.go`,
-			wantURI:  span.URI("file:///C:/Go/src/bob%20george/george/george.go"),
+			wantURI:  URI("file:///C:/Go/src/bob%20george/george/george.go"),
 		},
 		{
 			inputURI: `file:///path/to/%25p%25ercent%25/per%25cent.go`,
 			wantFile: `/path/to/%p%ercent%/per%cent.go`,
-			wantURI:  span.URI(`file:///path/to/%25p%25ercent%25/per%25cent.go`),
+			wantURI:  URI(`file:///path/to/%25p%25ercent%25/per%25cent.go`),
 		},
 		{
 			inputURI: `file:///C%3A/`,
 			wantFile: `C:/`,
-			wantURI:  span.URI(`file:///C:/`),
+			wantURI:  URI(`file:///C:/`),
 		},
 		{
 			inputURI: `file:///`,
 			wantFile: `/`,
-			wantURI:  span.URI(`file:///`),
+			wantURI:  URI(`file:///`),
 		},
 		{
 			inputURI: `file://wsl%24/Ubuntu/home/wdcui/repo/VMEnclaves/cvm-runtime`,
 			wantFile: `/wsl$/Ubuntu/home/wdcui/repo/VMEnclaves/cvm-runtime`,
-			wantURI:  span.URI(`file:///wsl$/Ubuntu/home/wdcui/repo/VMEnclaves/cvm-runtime`),
+			wantURI:  URI(`file:///wsl$/Ubuntu/home/wdcui/repo/VMEnclaves/cvm-runtime`),
 		},
 	} {
-		got := span.URIFromURI(test.inputURI)
+		got := URIFromURI(test.inputURI)
 		if got != test.wantURI {
 			t.Errorf("NewURI(%q): got %q, expected %q", test.inputURI, got, test.wantURI)
 		}
