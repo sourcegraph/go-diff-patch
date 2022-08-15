@@ -3,7 +3,7 @@ package example
 import (
 	"os"
 
-	godiffpatch "github.com/BolajiOlajide/go-diff-patch"
+	godiffpatch "github.com/sourcegraph/go-diff-patch"
 )
 
 func main() {
