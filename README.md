@@ -15,6 +15,6 @@ go get github.com/sourcegraph/go-diff-patch
 
 ### Usage
 
-The library exports a function `GeneratePatch` which returns the different between two files in a string format. This patch can then be applied to a valid git repository containing the specified file(s).
+The library exports a function `GeneratePatch` which computes edits between the original and updated file contents and produces a unified diff for them as a string. This patch can then be applied to a valid git repository containing the specified file(s).
 
 An example can be found in the [`examples/` directory](https://sourcegraph.com/github.com/sourcegraph/go-diff-patch/-/blob/examples/example.go?L1%3A1-20%3A1=).
