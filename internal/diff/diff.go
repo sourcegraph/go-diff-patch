@@ -49,8 +49,37 @@ func prepareEdits(before string, edits []TextEdit) ([]TextEdit, bool) {
 	return copied, partial
 }
 
+// ApplyEdits applies the set of edits to the before and returns the resulting
+// content.
+// It may panic or produce garbage if the edits are not valid for the provided
+// before content.
+func ApplyEdits(before string, edits []TextEdit) string {
+	// Preconditions:
+	//   - all of the edits apply to before
+	//   - and all the spans for each TextEdit have the same URI
+	if len(edits) == 0 {
+		return before
+	}
+	edits, _ = prepareEdits(before, edits)
+	after := strings.Builder{}
+	last := 0
+	for _, edit := range edits {
+		start := edit.Span.Start().Offset()
+		if start > last {
+			after.WriteString(before[last:start])
+			last = start
+		}
+		after.WriteString(edit.NewText)
+		last = edit.Span.End().Offset()
+	}
+	if last < len(before) {
+		after.WriteString(before[last:])
+	}
+	return after.String()
+}
+
 // lineEdits rewrites the edits to always be full line edits
-func lineEdits(before string, edits []TextEdit) []TextEdit {
+func LineEdits(before string, edits []TextEdit) []TextEdit {
 	adjusted := make([]TextEdit, 0, len(edits))
 	current := TextEdit{Span: span.Invalid}
 	for _, edit := range edits {
