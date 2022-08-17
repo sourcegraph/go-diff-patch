@@ -78,7 +78,7 @@ func ApplyEdits(before string, edits []TextEdit) string {
 	return after.String()
 }
 
-// lineEdits rewrites the edits to always be full line edits
+// LineEdits rewrites the edits to always be full line edits
 func LineEdits(before string, edits []TextEdit) []TextEdit {
 	adjusted := make([]TextEdit, 0, len(edits))
 	current := TextEdit{Span: span.Invalid}
