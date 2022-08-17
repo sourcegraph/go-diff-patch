@@ -8,7 +8,7 @@ import (
 
 func main() {
 	patch := godiffpatch.GeneratePatch("test.txt", original, updated)
-	err := os.WriteFile("gitignore.patch", []byte(patch), 0644)
+	err := os.WriteFile("test.txt", []byte(patch), 0644)
 	if err != nil {
 		panic(err)
 	}
