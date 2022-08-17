@@ -3,7 +3,7 @@
 [![Go CI](https://github.com/sourcegraph/go-diff-patch/actions/workflows/go-ci.yml/badge.svg)](https://github.com/sourcegraph/go-diff-patch/actions/workflows/go-ci.yml)
 [![lsif-go](https://github.com/sourcegraph/go-diff-patch/actions/workflows/lsif-go.yml/badge.svg)](https://github.com/sourcegraph/go-diff-patch/actions/workflows/lsif-go.yml)
 
-A fork of [Go tools](golang.org/x/tools). Go-diff-patch is an utility library that is used to generate git-compatible patches that are appliable to any repository.
+A fork of [Go tools](https://golang.org/x/tools). Go-diff-patch is an utility library that is used to generate git-compatible patches that are appliable to any repository.
 
 ## Installation
 
