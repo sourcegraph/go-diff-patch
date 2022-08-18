@@ -85,7 +85,7 @@ func ToUnified(from, to string, content string, edits []TextEdit) Unified {
 	}
 	edits, partial := prepareEdits(content, edits)
 	if partial {
-		edits = lineEdits(content, edits)
+		edits = LineEdits(content, edits)
 	}
 	lines := splitLines(content)
 	var h *Hunk
