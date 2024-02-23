@@ -1,0 +1,38 @@
+name: scip-go
+'on':
+  push:
+    paths:
+      - '**.go'
+jobs:
+  scip-go:
+    if: github.repository == 'sourcegraph/go-diff-patch'
+    runs-on: ubuntu-latest
+    container: sourcegraph/scip-go
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Get src-cli
+        run: curl -L https://sourcegraph.com/.api/src-cli/src_linux_amd64 -o /usr/local/bin/src;
+          chmod +x /usr/local/bin/src
+      - name: Set directory to safe for git
+        run: git config --global --add safe.directory $GITHUB_WORKSPACE
+      - name: Run scip-go
+        working-directory: ''
+        run: scip-go --no-animation
+      - name: Upload scip-go dump to Cloud
+        working-directory: ''
+        run: src code-intel upload -github-token='${{ secrets.GITHUB_TOKEN }}' -no-progress
+        env:
+          SRC_ENDPOINT: https://sourcegraph.com/
+      - name: Upload scip-go dump to Dogfood
+        working-directory: ''
+        run: src code-intel upload -github-token='${{ secrets.GITHUB_TOKEN }}' -no-progress
+          || true
+        env:
+          SRC_ENDPOINT: https://k8s.sgdev.org/
+      - name: Upload scip-go dump to Demo
+        working-directory: ''
+        run: src code-intel upload -github-token='${{ secrets.GITHUB_TOKEN }}' -no-progress
+          || true
+        env:
+          SRC_ENDPOINT: https://demo.sourcegraph.com/
